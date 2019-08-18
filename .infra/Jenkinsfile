@@ -15,7 +15,7 @@ pipeline {
         stage('Static Code Analysis')
         {
             steps {
-                sh 'echo "I am in Sonarqube scan"',
+                sh 'echo "I am in Sonarqube scan"'
             }
         }
        stage('Build DockerImage')
