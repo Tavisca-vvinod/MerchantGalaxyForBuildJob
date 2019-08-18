@@ -15,18 +15,13 @@ pipeline {
         stage('Static Code Analysis')
         {
             steps {
-                sh script: '''
-                    echo "I am in Sonarqube scan"
-                ''',
-            label: "Running Sonarqube Scan"
+                sh 'echo "I am in Sonarqube scan"',
             }
         }
        stage('Build DockerImage')
         {
             steps {
-            sh script: '''
-                docker build -t "merchantgalaxy" -f Dockerfile .
-                '''
+            sh "docker build -t "merchantgalaxy" -f Dockerfile . "
             }
         }
         stage('Publish DockerImage')
