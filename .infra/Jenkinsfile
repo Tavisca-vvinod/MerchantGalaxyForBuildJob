@@ -21,7 +21,7 @@ pipeline {
        stage('Build DockerImage')
         {
             steps {
-            sh "docker build -t "merchantgalaxy" -f Dockerfile . "
+            	sh "docker build -t "merchantgalaxy" -f Dockerfile . "
             }
         }
         stage('Publish DockerImage')
