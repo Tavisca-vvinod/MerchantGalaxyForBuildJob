@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'chmod +x ./gradlew'
+                sh './gradlew build -x test'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './gradlew test'
+            }
+        }
+        stage('Static Code Analysis')
+        {
+            steps {
+                sh script: '''
+                    echo "I am in Sonarqube scan"
+                ''',
+            label: "Running Sonarqube Scan"
+            }
+        }
+       stage('Build DockerImage')
+        {
+            steps {
+            sh script: '''
+                docker build -t "merchantgalaxy" -f Dockerfile .
+                '''
+            }
+        }
+        stage('Publish DockerImage')
+        {
+            steps {
+                sh "docker login -u varsha3604 -p varshauae123"
+                sh "docker tag merchantgalaxy:latest varsha3604/merchantgalaxy:latest"
+                sh "docker push varsha3604/merchantgalaxy:latest"
+            }
+        }
+    }
+    post{
+    	always{
+    		deleteDir()
+	}
+    }
+}
