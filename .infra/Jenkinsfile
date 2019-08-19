@@ -12,14 +12,16 @@ pipeline {
                 sh './gradlew test'
             }
         }
-        try {
-		stage("Building SONAR ...") {
+        
+	stage("Building SONAR ...") {
+		try {
 		sh './gradlew clean sonarqube'
 		}
-	} catch (e) {
+		catch (e) {
 		emailext attachLog: true, body: 'See attached log', subject: 'BUSINESS Build Failure', to: 'abc@gmail.com'
 		step([$class: 'WsCleanup'])
 		return
+		}
 	}
        stage('Build DockerImage')
         {
