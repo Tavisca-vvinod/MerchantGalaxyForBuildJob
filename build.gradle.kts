@@ -1,6 +1,6 @@
 plugins {
     java
-  id("org.sonarqube") version "2.7.0"
+   id("org.sonarqube") version "2.6.2"
 }
 
 group = "com.tavisca.workshops"
