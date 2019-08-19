@@ -13,7 +13,7 @@ pipeline {
             }
         }
         
-	stage("Building SONAR ...") {
+	stage('Building SONAR') {
 		try {
 		sh './gradlew clean sonarqube'
 		}
