@@ -14,13 +14,13 @@ pipeline {
         }
         
 	stage('Building SONAR') {
-		try {
-		sh './gradlew clean sonarqube'
-		}
-		catch (e) {
-		emailext attachLog: true, body: 'See attached log', subject: 'BUSINESS Build Failure', to: 'abc@gmail.com'
-		step([$class: 'WsCleanup'])
-		return
+		steps {
+    			echo 'Using sonarQube to do static code analysis'
+    			sh "  ./gradlew sonarqube \
+    		        -Dsonar.projectKey=tavisca-merchant \
+          		-Dsonar.organization=tavisca-vvinod \
+          		-Dsonar.host.url=https://sonarcloud.io \
+          		-Dsonar.login=8bb09f07d49f3a4a22373ebd68f5993a1fbc304b"
 		}
 	}
        stage('Build DockerImage')
